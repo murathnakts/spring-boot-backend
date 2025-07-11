@@ -1,5 +1,7 @@
 package com.murathnakts.controller;
 
+import com.murathnakts.dto.DtoStudent;
+import com.murathnakts.dto.DtoStudentIU;
 import com.murathnakts.entity.Student;
 import com.murathnakts.services.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +17,20 @@ public class StudentControllerImpl implements IStudentController {
     private IStudentService studentService;
 
     @PostMapping(path = "/save")
-    @Override //DTO Kullanılıcak
-    public Student saveStudent(@RequestBody Student student) {
-        return studentService.saveStudent(student);
+    @Override
+    public DtoStudent saveStudent(@RequestBody DtoStudentIU dtoStudentIU) {
+        return studentService.saveStudent(dtoStudentIU);
     }
 
     @GetMapping(path = "/list")
     @Override
-    public List<Student> getAllStudents() {
+    public List<DtoStudent> getAllStudents() {
         return studentService.getAllStudents();
     }
 
     @GetMapping(path = "/list/{id}")
     @Override
-    public Student getStudentById(@PathVariable(name = "id") Integer id) {
+    public DtoStudent getStudentById(@PathVariable(name = "id") Integer id) {
         return studentService.getStudentById(id);
     }
 
@@ -40,8 +42,14 @@ public class StudentControllerImpl implements IStudentController {
 
     @PutMapping(path = "/update/{id}")
     @Override
-    public Student updateStudent(@PathVariable(name = "id") Integer id,
-                                 @RequestBody Student updateStudent) {
-        return studentService.updateStudent(id, updateStudent);
+    public DtoStudent updateStudent(@PathVariable(name = "id") Integer id,
+                                    @RequestBody DtoStudentIU dtoStudentIU) {
+        return studentService.updateStudent(id, dtoStudentIU);
+    }
+
+    @GetMapping("/birth-date")
+    @Override
+    public List<String> getStudentBirthDate() {
+        return studentService.getStudentBirthDate();
     }
 }
