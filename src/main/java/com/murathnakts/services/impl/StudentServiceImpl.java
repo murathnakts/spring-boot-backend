@@ -1,9 +1,10 @@
-package com.murathnakts.services;
+package com.murathnakts.services.impl;
 
 import com.murathnakts.dto.DtoStudent;
 import com.murathnakts.dto.DtoStudentIU;
 import com.murathnakts.entity.Student;
 import com.murathnakts.repository.StudentRepository;
+import com.murathnakts.services.IStudentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

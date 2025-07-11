@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
-    @Query(value = "select date_of_birth from spring.student",  nativeQuery = true)
+    @Query(value = "select date_of_birth from spring.student", nativeQuery = true)
     List<String> getStudentBirthDate();
 }

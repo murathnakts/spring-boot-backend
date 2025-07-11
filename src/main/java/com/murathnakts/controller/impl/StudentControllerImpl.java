@@ -1,9 +1,10 @@
-package com.murathnakts.controller;
+package com.murathnakts.controller.impl;
 
+import com.murathnakts.controller.IStudentController;
 import com.murathnakts.dto.DtoStudent;
 import com.murathnakts.dto.DtoStudentIU;
-import com.murathnakts.entity.Student;
 import com.murathnakts.services.IStudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class StudentControllerImpl implements IStudentController {
 
     @PostMapping(path = "/save")
     @Override
-    public DtoStudent saveStudent(@RequestBody DtoStudentIU dtoStudentIU) {
+    public DtoStudent saveStudent(@RequestBody @Valid DtoStudentIU dtoStudentIU) {
         return studentService.saveStudent(dtoStudentIU);
     }
 
