@@ -13,4 +13,6 @@ public class DtoEmployee {
     private String firstName;
     private String lastName;
     private String email;
+    private DtoDepartment department;
+    private DtoAdress address;
 }

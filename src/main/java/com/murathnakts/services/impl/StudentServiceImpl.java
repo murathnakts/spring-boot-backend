@@ -1,7 +1,11 @@
 package com.murathnakts.services.impl;
 
+import com.murathnakts.dto.DtoCourse;
+import com.murathnakts.dto.DtoLesson;
 import com.murathnakts.dto.DtoStudent;
 import com.murathnakts.dto.DtoStudentIU;
+import com.murathnakts.entity.Course;
+import com.murathnakts.entity.Lesson;
 import com.murathnakts.entity.Student;
 import com.murathnakts.repository.StudentRepository;
 import com.murathnakts.services.IStudentService;
@@ -45,7 +49,27 @@ public class StudentServiceImpl implements IStudentService {
     public DtoStudent getStudentById(Integer id) {
         DtoStudent dtoStudent = new DtoStudent();
         Optional<Student> student = studentRepository.findById(id);
-        student.ifPresent(value -> BeanUtils.copyProperties(value, dtoStudent));
+        if (student.isPresent()) {
+            BeanUtils.copyProperties(student.get(), dtoStudent);
+            if (student.get().getLesson() != null) {
+                List<DtoLesson>  dtoLessonList = new ArrayList<>();
+                for (Lesson lesson : student.get().getLesson()) {
+                    DtoLesson dtoLesson = new DtoLesson();
+                    BeanUtils.copyProperties(lesson, dtoLesson);
+                    dtoLessonList.add(dtoLesson);
+                }
+                dtoStudent.setLesson(dtoLessonList);
+            }
+            if (student.get().getCourse() != null) {
+                List<DtoCourse>  dtoCourseList = new ArrayList<>();
+                for (Course course : student.get().getCourse()) {
+                    DtoCourse dtoCourse = new DtoCourse();
+                    BeanUtils.copyProperties(course, dtoCourse);
+                    dtoCourseList.add(dtoCourse);
+                }
+                dtoStudent.setCourse(dtoCourseList);
+            }
+        }
         return dtoStudent;
     }
 

@@ -1,5 +1,7 @@
 package com.murathnakts.services.impl;
 
+import com.murathnakts.dto.DtoAdress;
+import com.murathnakts.dto.DtoDepartment;
 import com.murathnakts.dto.DtoEmployee;
 import com.murathnakts.dto.DtoEmployeeIU;
 import com.murathnakts.entity.Employee;
@@ -35,8 +37,16 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public DtoEmployee getEmployeeById(Integer id) {
         DtoEmployee dtoEmployee = new DtoEmployee();
+        DtoAdress dtoAdress = new DtoAdress();
+        DtoDepartment dtoDepartment = new DtoDepartment();
         Optional<Employee> employee = employeeRepository.findById(id);
-        employee.ifPresent(value -> BeanUtils.copyProperties(value, dtoEmployee));
+        if (employee.isPresent()) {
+            BeanUtils.copyProperties(employee.get(), dtoEmployee);
+            BeanUtils.copyProperties(employee.get().getAddress(), dtoAdress);
+            BeanUtils.copyProperties(employee.get().getDepartment(), dtoDepartment);
+            dtoEmployee.setAddress(dtoAdress);
+            dtoEmployee.setDepartment(dtoDepartment);
+        }
         return dtoEmployee;
     }
 
@@ -72,7 +82,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
     public DtoEmployee updateEmployee(Integer id, DtoEmployeeIU dtoEmployeeIU) {
         DtoEmployee dtoEmployee = new DtoEmployee();
         Optional<Employee> findEmployee = employeeRepository.findById(id);
-        if(findEmployee.isPresent()) {
+        if (findEmployee.isPresent()) {
             Employee employee = findEmployee.get();
             employee.setFirstName(dtoEmployeeIU.getFirstName());
             employee.setLastName(dtoEmployeeIU.getLastName());

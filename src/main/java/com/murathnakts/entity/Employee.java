@@ -28,4 +28,10 @@ public class Employee {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @OneToOne
+    private Address address;
+
+    @ManyToOne
+    private Department department;
 }

@@ -1,6 +1,5 @@
 package com.murathnakts.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "student")
@@ -30,4 +30,10 @@ public class Student {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "date_of_birth", nullable = true)
     private Date dateOfBirth;
-}
+
+    @OneToMany
+    private List<Lesson> lesson;
+
+    @ManyToMany
+    private List<Course> course;
+ }
