@@ -2,15 +2,16 @@ package com.murathnakts.controller;
 
 import com.murathnakts.dto.DtoEmployee;
 import com.murathnakts.dto.DtoEmployeeIU;
+import com.murathnakts.entity.RootEntity;
 
 import java.util.List;
 
 public interface IEmployeeController {
 
 
-    public List<DtoEmployee> getAllEmployeeList();
+    public RootEntity<List<DtoEmployee>> getAllEmployeeList();
 
-    public DtoEmployee getEmployeeById(Integer id);
+    public RootEntity<DtoEmployee> getEmployeeById(Integer id);
 
     public List<DtoEmployee> getEmployeeWithParams(String firstName, String lastName);
 

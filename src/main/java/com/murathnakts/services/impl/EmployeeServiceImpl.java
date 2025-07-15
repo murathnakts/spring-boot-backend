@@ -5,6 +5,9 @@ import com.murathnakts.dto.DtoDepartment;
 import com.murathnakts.dto.DtoEmployee;
 import com.murathnakts.dto.DtoEmployeeIU;
 import com.murathnakts.entity.Employee;
+import com.murathnakts.exception.BaseException;
+import com.murathnakts.exception.ErrorMessage;
+import com.murathnakts.exception.MessageType;
 import com.murathnakts.repository.EmployeeRepository;
 import com.murathnakts.services.IEmployeeService;
 import org.springframework.beans.BeanUtils;
@@ -40,13 +43,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
         DtoAdress dtoAdress = new DtoAdress();
         DtoDepartment dtoDepartment = new DtoDepartment();
         Optional<Employee> employee = employeeRepository.findById(id);
-        if (employee.isPresent()) {
-            BeanUtils.copyProperties(employee.get(), dtoEmployee);
-            BeanUtils.copyProperties(employee.get().getAddress(), dtoAdress);
-            BeanUtils.copyProperties(employee.get().getDepartment(), dtoDepartment);
-            dtoEmployee.setAddress(dtoAdress);
-            dtoEmployee.setDepartment(dtoDepartment);
+        if (employee.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
+        BeanUtils.copyProperties(employee.get(), dtoEmployee);
+        BeanUtils.copyProperties(employee.get().getAddress(), dtoAdress);
+        BeanUtils.copyProperties(employee.get().getDepartment(), dtoDepartment);
+        dtoEmployee.setAddress(dtoAdress);
+        dtoEmployee.setDepartment(dtoDepartment);
         return dtoEmployee;
     }
 

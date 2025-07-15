@@ -3,6 +3,7 @@ package com.murathnakts.controller.impl;
 import com.murathnakts.controller.IEmployeeController;
 import com.murathnakts.dto.DtoEmployee;
 import com.murathnakts.dto.DtoEmployeeIU;
+import com.murathnakts.entity.RootEntity;
 import com.murathnakts.services.impl.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,19 +12,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/employee")
-public class EmployeeControllerImpl implements IEmployeeController {
+public class EmployeeControllerImpl extends BaseController implements IEmployeeController {
 
     @Autowired
     private EmployeeServiceImpl employeeService;
 
     @GetMapping(path = "/list")
-    public List<DtoEmployee> getAllEmployeeList() {
-        return employeeService.getAllEmployeeList();
+    public RootEntity<List<DtoEmployee>> getAllEmployeeList() {
+        return success(employeeService.getAllEmployeeList());
     }
 
     @GetMapping(path = "/list/{id}")
-    public DtoEmployee getEmployeeById(@PathVariable(name = "id", required = true) Integer id) {
-        return employeeService.getEmployeeById(id);
+    public RootEntity<DtoEmployee> getEmployeeById(@PathVariable(name = "id", required = true) Integer id) {
+        return success(employeeService.getEmployeeById(id));
     }
 
     @GetMapping(path = "/with-params")
