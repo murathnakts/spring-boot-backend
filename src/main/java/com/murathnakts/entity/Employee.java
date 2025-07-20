@@ -32,6 +32,6 @@ public class Employee {
     @OneToOne
     private Address address;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Department department;
 }
