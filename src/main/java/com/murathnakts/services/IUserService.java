@@ -10,5 +10,5 @@ public interface IUserService {
 
     public DtoToken authenticate(DtoUser request);
 
-    public DtoToken refreshToken(DtoRefreshToken refreshTokenn);
+    public DtoToken refreshToken(DtoRefreshToken refreshToken);
 }

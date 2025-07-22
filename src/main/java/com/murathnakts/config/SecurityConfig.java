@@ -19,6 +19,7 @@ public class SecurityConfig {
     public static final String AUTHENTICATE = "/authenticate";
     public static final String REGISTER = "/register";
     public static final String REFRESH_TOKEN = "/refresh-token";
+    public static final String[] SWAGGER_PATS = {"/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**"};
 
     @Autowired
     private AuthenticationProvider authenticationProvider;
@@ -35,6 +36,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests ->
                         requests.requestMatchers(AUTHENTICATE, REGISTER, REFRESH_TOKEN)
                                 .permitAll()
+                                .requestMatchers(SWAGGER_PATS).permitAll()
                                 .anyRequest()
                                 .authenticated())
                 .exceptionHandling().authenticationEntryPoint(authEntryPoint).and()

@@ -1,18 +1,24 @@
 package com.murathnakts.controller.impl;
 
+import com.murathnakts.controller.BaseController;
 import com.murathnakts.controller.IStudentController;
 import com.murathnakts.dto.DtoStudent;
 import com.murathnakts.dto.DtoStudentIU;
+import com.murathnakts.entity.RootEntity;
+import com.murathnakts.entity.Student;
 import com.murathnakts.services.IStudentService;
+import com.murathnakts.utils.PageableRequest;
+import com.murathnakts.utils.PageableResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/student")
-public class StudentControllerImpl implements IStudentController {
+public class StudentControllerImpl extends BaseController implements IStudentController {
 
     @Autowired
     private IStudentService studentService;
@@ -52,5 +58,14 @@ public class StudentControllerImpl implements IStudentController {
     @Override
     public List<String> getStudentBirthDate() {
         return studentService.getStudentBirthDate();
+    }
+
+
+    //@ModelAttribute
+    @GetMapping(path = "/pageable")
+    @Override
+    public RootEntity<PageableResponse<DtoStudent>> findAllPageable(PageableRequest pageRequest) {
+        Page<Student> page = studentService.findAllPageable(toPageable(pageRequest));
+        return success(toPageableResponse(page, studentService.toDtoList(page.getContent())));
     }
 }
